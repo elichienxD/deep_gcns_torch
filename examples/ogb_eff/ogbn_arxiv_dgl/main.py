@@ -62,19 +62,6 @@ def load_data(dataset,args):
     if args.pretrain_path is not 'None':
         graph.ndata["feat"] = torch.tensor(np.load(args.pretrain_path)).float()
         print("Pretrained node feature loaded! Path: {}".format(args.pretrain_path))
-    
-    if args.preprocess == 'Std':
-        # Decide if we want to normalize along dim 0 or 1.
-        X = graph.ndata["feat"]
-        X = X-X.mean(dim=0,keepdim=True)
-        X = X/torch.std(X, dim=0, keepdim=True)
-        graph.ndata["feat"] = X
-        print("Node features standardized!")
-    elif args.preprocess == 'Norm':
-        X = graph.ndata["feat"].numpy()
-        X = torch.tensor(normalize(X))
-        graph.ndata["feat"] = X
-        print("Node features normalized!")
         
     
     n_node_feats = graph.ndata["feat"].shape[1]
@@ -403,7 +390,6 @@ def main():
     argparser.add_argument("--temp",type=float, default=1.0, help="temperature of kd")
     argparser.add_argument('--data_root_dir', type=str, default='default', help="dir_path for saving graph data. Note that this model use DGL loader so do not mix up with the dir_path for the Pyg one. Use 'default' to save datasets at current folder.")
     argparser.add_argument("--pretrain_path", type=str, default='None', help="path for pretrained node features")
-    argparser.add_argument("--preprocess", type=str, default="None", help="preprocess node features")
     args = argparser.parse_args()
     
     # Adjust kd_dir here
