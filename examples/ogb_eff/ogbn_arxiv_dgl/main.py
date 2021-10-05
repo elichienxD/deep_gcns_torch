@@ -44,16 +44,39 @@ def seed(seed=0):
     dgl.random.seed(seed)
 
 
-def load_data(dataset):
+def load_data(dataset,args):
     global n_node_feats, n_classes
 
-    data = DglNodePropPredDataset(name=dataset)
+    if args.data_root_dir == 'default':
+        data = DglNodePropPredDataset(name=dataset)
+    else:
+        data = DglNodePropPredDataset(name=dataset,root=args.data_root_dir)
+
     evaluator = Evaluator(name=dataset)
 
     splitted_idx = data.get_idx_split()
     train_idx, val_idx, test_idx = splitted_idx["train"], splitted_idx["valid"], splitted_idx["test"]
     graph, labels = data[0]
-
+    
+    # Replace node features here
+    if args.pretrain_path is not 'None':
+        graph.ndata["feat"] = torch.tensor(np.load(args.pretrain_path)).float()
+        print("Pretrained node feature loaded! Path: {}".format(args.pretrain_path))
+    
+    if args.preprocess == 'Std':
+        # Decide if we want to normalize along dim 0 or 1.
+        X = graph.ndata["feat"]
+        X = X-X.mean(dim=0,keepdim=True)
+        X = X/torch.std(X, dim=0, keepdim=True)
+        graph.ndata["feat"] = X
+        print("Node features standardized!")
+    elif args.preprocess == 'Norm':
+        X = graph.ndata["feat"].numpy()
+        X = torch.tensor(normalize(X))
+        graph.ndata["feat"] = X
+        print("Node features normalized!")
+        
+    
     n_node_feats = graph.ndata["feat"].shape[1]
     n_classes = (labels.max() + 1).item()
 
@@ -378,9 +401,15 @@ def main():
     argparser.add_argument("--mode", type=str, default='teacher', help="kd mode [teacher, student]")
     argparser.add_argument("--alpha",type=float, default=0.5, help="ratio of kd loss")
     argparser.add_argument("--temp",type=float, default=1.0, help="temperature of kd")
+    argparser.add_argument('--data_root_dir', type=str, default='default', help="dir_path for saving graph data. Note that this model use DGL loader so do not mix up with the dir_path for the Pyg one. Use 'default' to save datasets at current folder.")
+    argparser.add_argument("--pretrain_path", type=str, default='None', help="path for pretrained node features")
+    argparser.add_argument("--preprocess", type=str, default="None", help="preprocess node features")
     args = argparser.parse_args()
-
-    args.save = '{}-L{}-DP{}-H{}'.format(args.save, args.n_layers, args.dropout, args.n_hidden)
+    
+    # Adjust kd_dir here
+    args.kd_dir = '{}/-L{}-H{}-Ptrn_{}-Prep_{}'.format(args.kd_dir, args.n_layers, args.n_hidden, args.pretrain_path, args.level, args.preprocess)
+    
+    args.save = '{}/-L{}-H{}-Ptrn_{}-Prep_{}'.format(args.kd_dir, args.n_layers, args.n_hidden, args.pretrain_path, args.level, args.preprocess)
     args.save = 'log/{}-{}-{}'.format(args.save, time.strftime("%Y%m%d-%H%M%S"), str(uuid.uuid4()))
     if not os.path.exists(args.save):
         os.makedirs(args.save)
@@ -403,7 +432,9 @@ def main():
         device = torch.device(f"cuda:{args.gpu}")
 
     # load data & preprocess
-    graph, labels, train_idx, val_idx, test_idx, evaluator = load_data(dataset)
+    graph, labels, train_idx, val_idx, test_idx, evaluator = load_data(dataset,args)
+    
+    
     graph = preprocess(graph)
 
     graph, labels, train_idx, val_idx, test_idx = map(
@@ -429,13 +460,14 @@ def main():
     logging.info(val_accs)
     logging.info("Test Accs:")
     logging.info(test_accs)
-    logging.info(f"Average val accuracy: {np.mean(val_accs)} ± {np.std(val_accs)}")
-    logging.info(f"Average test accuracy: {np.mean(test_accs)} ± {np.std(test_accs)}")
+    logging.info(f"Average val accuracy: {100*np.mean(val_accs):.2f} ± {100*np.std(val_accs):.2f}")
+    logging.info(f"Average test accuracy: {100*np.mean(test_accs):.2f} ± {100*np.std(test_accs):.2f}")
     logging.info(f"Number of params: {count_parameters(args)}")
 
 if __name__ == "__main__":
     main()
 
+# This is for the case using default ogb node features.
 #  ******************************Teacher******************************
 #  Namespace(alpha=0.5, attn_drop=0.0, backbone='rev', cpu=False, dropout=0.75, edge_drop=0.3, gpu=0, group=2, input_drop=0.25, kd_dir='./kd', log_every=20, lr=0.002, mask_rate=0.5, mode='teacher', n_epochs=2000, n_heads=3, n_hidden=256, n_label_iters=1, n_layers=5, n_runs=10, no_attn_dst=True, plot_curves=False, save='log/kd-L5-DP0.75-H256-20210620-044728-d9034b17-88b2-45fb-bfd2-bdc7d6de3313', save_pred=False, seed=0, temp=1.0, use_labels=True, use_norm=True, wd=0)
 #  Runned 10 times
