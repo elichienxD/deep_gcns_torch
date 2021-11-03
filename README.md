@@ -1,3 +1,45 @@
+# GIANT-XRT+RevGAT
+
+This is the repository for reproducing the results in our paper: [[Node Feature Extraction by Self-Supervised Multi-scale Neighborhood Prediction]](https://arxiv.org/pdf/2111.00064.pdf) for the combination of GIANT-XRT+RevGAT.
+
+## Step 0: Install GIANT and get GIANT-XRT node features.
+Please follow the instruction in [[GIANT]](https://github.com/amzn/pecos/tree/mainline/examples/giant-xrt) to get the GIANT-XRT node features.
+
+## Step 1: Git clone this repo.
+After following the steps in [[GIANT]](https://github.com/amzn/pecos/tree/mainline/examples/giant-xrt), go to the folder
+`pecos/examples/giant-xrt`
+
+Then git clone this repo in the folder `giant-xrt` directly.
+
+## Step 2: Install additional packages.
+If you install and run GIANT correctly, you should only need to additionally install [dgl>=0.5.3](https://github.com/dmlc/dgl).
+
+## Step 3: Run the experiment.
+Go to the folder `deep_gcns_torch`.
+
+Run `Runexp_RevGAT_ogbnarxiv.sh` for reproducing our results for ogbn-arxiv dataset with GIANT-XRT features.
+
+```
+New arguments
+
+--data_root_dir: path to save ogb datasets.
+--pretrain_path: path to load GIANT-XRT features. Set it to 'None' for using ogb default features.
+```
+For more details about RevGAT, please check the original README below.
+
+## Citation
+If you find our code useful, please cite both our GIANT paper and the RevGAT references provided in the original README (at the bottom).
+
+```
+@article{chien2021node,
+  title={Node Feature Extraction by Self-Supervised Multi-scale Neighborhood Prediction},
+  author={Eli Chien and Wei-Cheng Chang and Cho-Jui Hsieh and Hsiang-Fu Yu and Jiong Zhang and Olgica Milenkovic and Inderjit S Dhillon},
+  journal={arXiv preprint arXiv:2111.00064},
+  year={2021}
+}
+```
+
+***
 # DeepGCNs: Can GCNs Go as Deep as CNNs?
 In this work, we present new ways to successfully train very deep GCNs. We borrow concepts from CNNs, mainly residual/dense connections and dilated convolutions, and adapt them to GCN architectures. Through extensive experiments, we show the positive effect of these deep GCN frameworks.
 
