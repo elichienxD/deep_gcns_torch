@@ -27,7 +27,7 @@ New arguments
 ``` 
 
 ## Results
-If execute correctly, you should have the following performance.
+If execute correctly, you should have the following performance (using our pretrained GIANT-XRT features).
 
 Teacher model (RevGAT):
 * Average val accuracy: 77.12 ± 0.07
