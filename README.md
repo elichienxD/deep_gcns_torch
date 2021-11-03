@@ -38,6 +38,7 @@ If you find our code useful, please cite both our GIANT paper and the RevGAT ref
   year={2021}
 }
 ```
+Feel free to email me (ichien3@illinois.edu) if you have further questions. My notification of the Github issue does not work properly so make sure to drop me an email when you open a new issue.
 
 ***
 # DeepGCNs: Can GCNs Go as Deep as CNNs?
