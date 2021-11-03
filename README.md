@@ -3,7 +3,7 @@
 This is the repository for reproducing the results in our paper: [[Node Feature Extraction by Self-Supervised Multi-scale Neighborhood Prediction]](https://arxiv.org/pdf/2111.00064.pdf) for the combination of GIANT-XRT+RevGAT.
 
 ## Step 0: Install GIANT and get GIANT-XRT node features.
-Please follow the instruction in [[GIANT]](https://github.com/amzn/pecos/tree/mainline/examples/giant-xrt) to get the GIANT-XRT node features.
+Please follow the instruction in [[GIANT]](https://github.com/amzn/pecos/tree/mainline/examples/giant-xrt) to get the GIANT-XRT node features. Note that if you generate your own pretrained node features from GIANT-XRT, you should be aware of your save path and modify the --pretrain_path (below in Step 3) accordingly.
 
 ## Step 1: Git clone this repo.
 After following the steps in [[GIANT]](https://github.com/amzn/pecos/tree/mainline/examples/giant-xrt), go to the folder
@@ -24,7 +24,15 @@ New arguments
 
 --data_root_dir: path to save ogb datasets.
 --pretrain_path: path to load GIANT-XRT features. Set it to 'None' for using ogb default features.
-```
+``` 
+
+## Results
+If execute correctly, you should have the following performance.
+
+* Average val accuracy: 77.12 ± 0.07
+* Average test accuracy: 75.82 ± 0.13
+* Number of params: 3081296
+
 For more details about RevGAT, please check the original README below.
 
 ## Citation
