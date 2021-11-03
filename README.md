@@ -29,10 +29,16 @@ New arguments
 ## Results
 If execute correctly, you should have the following performance.
 
+Teacher model (RevGAT):
 * Average val accuracy: 77.12 ± 0.07
 * Average test accuracy: 75.82 ± 0.13
 * Number of params: 3081296
 
+Student model (RevGAT+KD):
+* Average val accuracy: 77.27 ± 0.07
+* Average test accuracy: 76.09 ± 0.15
+* Number of params: 3081296
+* 
 For more details about RevGAT, please check the original README below.
 
 ## Citation
