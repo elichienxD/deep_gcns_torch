@@ -40,7 +40,7 @@ Student model (RevGAT+KD):
 * Number of params: 3081296
 
 
-For more details about RevGAT, please check the original README below.
+For more details about RevGAT, please check the original README.
 
 ## Citation
 If you find our code useful, please cite both our GIANT paper and the RevGAT references provided in the original repo.
