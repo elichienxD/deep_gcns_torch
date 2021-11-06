@@ -39,7 +39,7 @@ Student model (RevGAT+KD):
 * Average test accuracy: 76.09 ± 0.15
 * Number of params: 3081296
 
-**Remark:** We do not fine-tune RevGAT for our GIANT-XRT. It is possible to achieve higher performance by fine-tune it more carefully. We encourage readers to do so for the best performance.
+**Remark:** We do not fine-tune RevGAT for our GIANT-XRT. It is possible to achieve higher performance by fine-tune it more carefully.
 
 For more details about RevGAT, please check the original README.
 
