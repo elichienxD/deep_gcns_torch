@@ -59,7 +59,7 @@ def load_data(dataset,args):
     graph, labels = data[0]
     
     # Replace node features here
-    if args.pretrain_path is not 'None':
+    if args.pretrain_path != 'None':
         graph.ndata["feat"] = torch.tensor(np.load(args.pretrain_path)).float()
         print("Pretrained node feature loaded! Path: {}".format(args.pretrain_path))
         
@@ -393,9 +393,9 @@ def main():
     args = argparser.parse_args()
     
     # Adjust kd_dir here
-    args.kd_dir = '{}/-L{}-H{}-Ptrn_{}-Prep_{}'.format(args.kd_dir, args.n_layers, args.n_hidden, args.pretrain_path, args.level, args.preprocess)
+    args.kd_dir = '{}/-L{}-H{}-Ptrn_{}'.format(args.kd_dir, args.n_layers, args.n_hidden, not args.pretrain_path=='None')
     
-    args.save = '{}/-L{}-H{}-Ptrn_{}-Prep_{}'.format(args.kd_dir, args.n_layers, args.n_hidden, args.pretrain_path, args.level, args.preprocess)
+    args.save = '{}/-L{}-H{}-Ptrn_{}'.format(args.kd_dir, args.n_layers, args.n_hidden, not args.pretrain_path=='None')
     args.save = 'log/{}-{}-{}'.format(args.save, time.strftime("%Y%m%d-%H%M%S"), str(uuid.uuid4()))
     if not os.path.exists(args.save):
         os.makedirs(args.save)
