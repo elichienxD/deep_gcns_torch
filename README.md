@@ -34,6 +34,8 @@ If execute correctly, you should have the following performance (using our pretr
 | Average val accuracy | 77.01 ± 0.09 | 77.16 ± 0.09 |
 | Average test accuracy | 75.90 ± 0.19 | 76.15 ± 0.10 |
 
+Number of params: 1304912
+
 **Remark:** We do not carefully fine-tune RevGAT for our GIANT-XRT. It is possible to achieve higher performance by fine-tune it more carefully.
 
 For more details about RevGAT, please check the original README.
