@@ -29,17 +29,12 @@ New arguments
 ## Results
 If execute correctly, you should have the following performance (using our pretrained GIANT-XRT features).
 
-Teacher model (RevGAT):
-* Average val accuracy: 77.12 ± 0.07
-* Average test accuracy: 75.82 ± 0.13
-* Number of params: 3081296
+|  | RevGAT | RevGAT+KD |
+|---|---|---|
+| Average val accuracy | 77.01 ± 0.09 | 77.16 ± 0.09 |
+| Average test accuracy | 75.90 ± 0.19 | 76.15 ± 0.10 |
 
-Student model (RevGAT+KD):
-* Average val accuracy: 77.27 ± 0.07
-* Average test accuracy: 76.09 ± 0.15
-* Number of params: 3081296
-
-**Remark:** We do not fine-tune RevGAT for our GIANT-XRT. It is possible to achieve higher performance by fine-tune it more carefully.
+**Remark:** We do not carefully fine-tune RevGAT for our GIANT-XRT. It is possible to achieve higher performance by fine-tune it more carefully.
 
 For more details about RevGAT, please check the original README.
 
