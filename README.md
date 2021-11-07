@@ -31,8 +31,8 @@ If execute correctly, you should have the following performance (using our pretr
 
 |  | RevGAT | RevGAT+KD |
 |---|---|---|
-| Average val accuracy | 77.01 ± 0.09 | 77.16 ± 0.09 |
-| Average test accuracy | 75.90 ± 0.19 | 76.15 ± 0.10 |
+| Average val accuracy (%) | 77.01 ± 0.09 | 77.16 ± 0.09 |
+| Average test accuracy (%) | 75.90 ± 0.19 | 76.15 ± 0.10 |
 
 Number of params: 1304912
 
