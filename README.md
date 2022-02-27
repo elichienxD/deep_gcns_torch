@@ -45,11 +45,11 @@ If you find our code useful, please cite both our GIANT paper and the RevGAT ref
 
 Our GIANT paper:
 ```
-@article{chien2021node,
+@inproceedings{chien2021node,
   title={Node Feature Extraction by Self-Supervised Multi-scale Neighborhood Prediction},
-  author={Eli Chien and Wei-Cheng Chang and Cho-Jui Hsieh and Hsiang-Fu Yu and Jiong Zhang and Olgica Milenkovic and Inderjit S Dhillon},
-  journal={arXiv preprint arXiv:2111.00064},
-  year={2021}
+  author={Chien, Eli and Chang, Wei-Cheng and Hsieh, Cho-Jui and Yu, Hsiang-Fu and Zhang, Jiong and Milenkovic, Olgica and Dhillon, Inderjit S},
+  booktitle={International Conference on Learning Representations (ICLR)},
+  year={2022}
 }
 ```
 
